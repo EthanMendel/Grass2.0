@@ -1,6 +1,6 @@
 package main
 
-import "ethan/worker"
+import "EthanMendel/Grass2.0/worker"
 
 func main() {
 	worker.Hello()
