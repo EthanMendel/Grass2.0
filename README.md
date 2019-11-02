@@ -2,4 +2,4 @@
 
 * bullet 1
 
-## section 2
+## Section 2
