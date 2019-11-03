@@ -29,8 +29,9 @@ type Panel struct {
 }
 
 type Plant struct {
-	Dates  []time.Time
-	Panels map[string]*Panel
+	Dates    []time.Time
+	Averages []float64
+	Panels   map[string]*Panel
 }
 
 func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
@@ -67,6 +68,7 @@ func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
 		}
 		plant.Panels[panel.Name] = &panel
 	}
+	plant.Averages = make([]float64, len(plant.Dates), len(plant.Dates))
 	ReadShading(&plant, shadingFilename)
 	return &plant, nil
 }
