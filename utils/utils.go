@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"encoding/csv"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -83,4 +84,12 @@ func ReadShading(plant *Plant, fileName string) error {
 		plant.Panels[records[0][col]].Shading = records[1][col]
 	}
 	return nil
+}
+
+func FmtDuration(d time.Duration) string {
+	d = d.Round(time.Millisecond)
+	s := d / time.Second
+	d -= s * time.Second
+	ms := d / time.Millisecond
+	return fmt.Sprintf("%02d:%02d", s, ms)
 }

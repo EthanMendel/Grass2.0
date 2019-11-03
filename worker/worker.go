@@ -1,13 +1,21 @@
 package worker
 
-import "github.com/EthanMendel/Grass2.0/utils"
+import (
+	"sync"
 
-var PlantNSavg []float64
+	"github.com/EthanMendel/Grass2.0/utils"
+)
 
-func CalculateNSaverage(plant *utils.Plant, start int, end int) {
+func CalculateNSaverage(plant *utils.Plant, start int, end int, wg *sync.WaitGroup) {
+	defer func() {
+		if wg != nil {
+			wg.Done()
+		}
+	}()
 	if end > len(plant.Dates) {
 		end = len(plant.Dates)
 	}
+	//fmt.Printf("Processing %d entries\n", end-start)
 	for row := start; row < end; row++ {
 		total := 0.0
 		count := 0.0
