@@ -1,6 +1,7 @@
 package experiment
 
 import (
+	"strconv"
 	"sync"
 	"time"
 
@@ -8,7 +9,9 @@ import (
 	"github.com/EthanMendel/Grass2.0/worker"
 )
 
-func AvgExp(plant *utils.Plant, numThreads int) time.Duration {
+const MaxThreads = 20
+
+func FindAvg(plant *utils.Plant, numThreads int) time.Duration {
 	rtp := len(plant.Dates) / numThreads //rows to process
 	start := 0
 	var wg sync.WaitGroup
@@ -28,4 +31,16 @@ func AvgExp(plant *utils.Plant, numThreads int) time.Duration {
 	expTime := time.Since(startTime)
 	return expTime
 
+}
+
+func AvgExp(plant *utils.Plant, outFileName string) error {
+	results := [][]string{{"Threads", "Duration"}}
+	//worker.CalculateNSaverage(plant, 0, len(plant.Dates))
+	for i := 1; i < MaxThreads+1; i++ {
+		d := FindAvg(plant, i)
+		h := []string{strconv.Itoa(i), strconv.Itoa(int(d))}
+		results = append(results, h)
+	}
+	err := utils.CreateCSV(outFileName, results)
+	return err
 }

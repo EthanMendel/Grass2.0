@@ -93,3 +93,22 @@ func FmtDuration(d time.Duration) string {
 	ms := d / time.Millisecond
 	return fmt.Sprintf("%02d:%02d", s, ms)
 }
+
+func CreateCSV(fileName string, data [][]string) error {
+	file, err := os.Create(fileName)
+	if err != nil {
+		log.Fatalf("Could not Create File %s", err.Error())
+		return err
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+	for _, value := range data {
+		err := writer.Write(value)
+		if err != nil {
+			log.Fatalf("Could not Create File %s", err.Error())
+			return err
+		}
+	}
+	return nil
+}
