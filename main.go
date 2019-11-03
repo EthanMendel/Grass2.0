@@ -9,12 +9,12 @@ import (
 
 func main() {
 	//worker.Hello()
-	data, de := utils.ReadData("./Data/SyntheticData1Data.csv")
+	data, de := utils.ReadPlant("./Data/SyntheticData1Data.csv")
 	if de != nil {
 		log.Fatal(de)
 		return
 	}
-	fmt.Printf("Data: rows[%d], col[%d]", len(data.Data), len(data.Header.Headers))
+	fmt.Printf("Data: rows[%d], col[%d]", len(data.Dates), len(data.Panels))
 	//shading, se := utils.ReadCSV("./Data/SyntheticData1Shading.csv")
 	//fmt.Println(data, de)
 }
