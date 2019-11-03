@@ -27,6 +27,7 @@ type Panel struct {
 	Name    string
 	Shading string
 	Data    []float64
+	DifPer  []float64 //difference percentages
 }
 
 type Plant struct {
@@ -58,6 +59,7 @@ func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
 			Name:    records[0][col],
 			Shading: "TBD",
 			Data:    []float64{},
+			DifPer:  []float64{},
 		}
 		for row := 1; row < len(records); row++ {
 			f, fe := strconv.ParseFloat(records[row][col], 64)
@@ -66,6 +68,7 @@ func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
 				return nil, fe
 			}
 			panel.Data = append(panel.Data, f)
+
 		}
 		plant.Panels[panel.Name] = &panel
 	}
@@ -82,6 +85,11 @@ func ReadShading(plant *Plant, fileName string) error {
 	}
 	for col := 1; col < len(records[0]); col++ {
 		plant.Panels[records[0][col]].Shading = records[1][col]
+		if records[1][col] == "Bad" {
+			plant.Panels[records[0][col]].DifPer = make([]float64, len(plant.Dates), len(plant.Dates))
+		} else {
+			plant.Panels[records[0][col]].DifPer = []float64{}
+		}
 	}
 	return nil
 }

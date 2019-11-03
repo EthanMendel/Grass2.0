@@ -15,6 +15,10 @@ func main() {
 		log.Fatal(de)
 		return
 	}
-	experiment.AvgExp(plant, "./Results/ThreadsForAverageCalculation.csv")
+	experiment.FindAvg(plant, 5)
+	//experiment.FindDifPer(plant, 5)
+	//experiment.AvgExp(plant, "./Results/ThreadsForAverageCalculation.csv")
+	experiment.DifPerExp(plant, "./Results/ThreadsForDifPerCalculation.csv")
+
 	fmt.Printf("\nProcessed %d Panels", len(plant.Panels))
 }
