@@ -13,7 +13,7 @@ EXE?=app
 # will take it back "gopath" 
 #
 # GOPATH?=../../../../
-GOPATH?=/Users/gmendel/GO
+GOPATH?=/Users/ethanmendel/GO
 
 #####
 # Define DEBUG to have go compile with debug flags
