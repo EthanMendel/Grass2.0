@@ -42,10 +42,8 @@ func CalculateDifPer(plant *utils.Plant, start int, end int, wg *sync.WaitGroup)
 	//fmt.Printf("Processing %d entries\n", end-start)
 	for _, panel := range plant.Panels {
 		for row := start; row < end; row++ {
-			if panel.Shading == "Bad" {
-				panel.DifPer[row] = (plant.Averages[row] - panel.Data[row]) / plant.Averages[row]
-				//fmt.Printf("Difference as a Percent of Panel %s is %d\n", panel.Name, panel.DifPer[row])
-			}
+			panel.DifPer[row] = (plant.Averages[row] - panel.Data[row]) / plant.Averages[row]
+			//fmt.Printf("Difference as a Percent of Panel %s is %d\n", panel.Name, panel.DifPer[row])
 		}
 	}
 }
