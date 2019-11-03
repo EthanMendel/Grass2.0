@@ -15,6 +15,6 @@ func main() {
 		log.Fatal(de)
 		return
 	}
-	experiment.AvgExp(plant, "ThreadsForAverageCalculation.csv")
+	experiment.AvgExp(plant, "./Results/ThreadsForAverageCalculation.csv")
 	fmt.Printf("\nProcessed %d Panels", len(plant.Panels))
 }
