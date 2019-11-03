@@ -9,7 +9,7 @@ import (
 
 func main() {
 	//worker.Hello()
-	data, de := utils.ReadPlant("./Data/SyntheticData1Data.csv")
+	data, de := utils.ReadPlant("./Data/SyntheticData1Data.csv", "./Data/SyntheticData1Shading.csv")
 	if de != nil {
 		log.Fatal(de)
 		return

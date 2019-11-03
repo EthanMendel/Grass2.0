@@ -33,8 +33,8 @@ type Plant struct {
 	Panels map[string]*Panel
 }
 
-func ReadPlant(fileName string) (*Plant, error) {
-	records, err := ReadCSV(fileName)
+func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
+	records, err := ReadCSV(dataFileName)
 	if err != nil {
 		return nil, err
 	}
@@ -67,5 +67,18 @@ func ReadPlant(fileName string) (*Plant, error) {
 		}
 		plant.Panels[panel.Name] = &panel
 	}
+	ReadShading(&plant, shadingFilename)
 	return &plant, nil
+}
+
+func ReadShading(plant *Plant, fileName string) error {
+	records, err := ReadCSV(fileName)
+	if err != nil {
+		log.Fatalf("Could not read Shading file[%s]: %s", fileName, err.Error())
+		return err
+	}
+	for col := 1; col < len(records[0]); col++ {
+		plant.Panels[records[0][col]].Shading = records[1][col]
+	}
+	return nil
 }
