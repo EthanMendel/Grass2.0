@@ -96,9 +96,9 @@ func FmtDuration(d time.Duration) string {
 	d -= s * time.Second
 	ms := d / time.Millisecond
 	if s == 0 {
-		return fmt.Sprintf("%2.2f", ms)
+		return fmt.Sprintf("%02d", ms)
 	} else {
-		return fmt.Sprintf("%2.2f:%2.2f", s, ms)
+		return fmt.Sprintf("%02d:%02d", s, ms)
 	}
 }
 
