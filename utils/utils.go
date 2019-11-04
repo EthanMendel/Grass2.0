@@ -95,7 +95,11 @@ func FmtDuration(d time.Duration) string {
 	s := d / time.Second
 	d -= s * time.Second
 	ms := d / time.Millisecond
-	return fmt.Sprintf("%02d:%02d", s, ms)
+	if s == 0 {
+		return fmt.Sprintf("%02d", ms)
+	} else {
+		return fmt.Sprintf("%02d:%02d", s, ms)
+	}
 }
 
 func CreateCSV(fileName string, data [][]string) error {

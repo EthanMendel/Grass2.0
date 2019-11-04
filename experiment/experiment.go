@@ -37,8 +37,8 @@ func AvgExp(plant *utils.Plant, outFileName string) error {
 	results := [][]string{{"Threads", "Duration"}}
 	//worker.CalculateNSaverage(plant, 0, len(plant.Dates))
 	for i := 1; i < MaxThreads+1; i++ {
-		d := FindAvg(plant, i)
-		h := []string{strconv.Itoa(i), strconv.Itoa(int(d))}
+		d := utils.FmtDuration(FindAvg(plant, i))
+		h := []string{strconv.Itoa(i), d}
 		results = append(results, h)
 	}
 	err := utils.CreateCSV(outFileName, results)
@@ -71,8 +71,8 @@ func DifPerExp(plant *utils.Plant, outFileName string) error {
 	results := [][]string{{"Threads", "Duration"}}
 	//worker.CalculateNSaverage(plant, 0, len(plant.Dates))
 	for i := 1; i < MaxThreads+1; i++ {
-		d := FindDifPer(plant, i)
-		h := []string{strconv.Itoa(i), strconv.Itoa(int(d))}
+		d := utils.FmtDuration(FindDifPer(plant, i))
+		h := []string{strconv.Itoa(i), d}
 		results = append(results, h)
 	}
 	err := utils.CreateCSV(outFileName, results)
