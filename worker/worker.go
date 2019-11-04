@@ -62,9 +62,9 @@ func SetupResults(plant *utils.Plant, outFileName string) error {
 	for row := 0; row < len(plant.Dates); row++ {
 		data := []string{}
 		data = append(data, plant.Dates[row].Format(utils.DateLayout))
-		for _, panel := range plant.Panels {
-			if panel.Shading == "Bad" {
-				data = append(data, strconv.FormatFloat(panel.DifPer[row], 'f', 6, 64))
+		for i := 1; i < len(headers); i++ {
+			if plant.Panels[headers[i]].Shading == "Bad" {
+				data = append(data, strconv.FormatFloat(plant.Panels[headers[i]].DifPer[row], 'f', 6, 64))
 			}
 		}
 		results = append(results, data)
