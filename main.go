@@ -11,7 +11,7 @@ import (
 
 func main() {
 	//worker.Hello()
-	plant, de := utils.ReadPlant("./Data/SyntheticData1Data.csv", "./Data/SyntheticData1Shading.csv")
+	plant, de := utils.ReadPlant("./Data/SyntheticData2Data.csv", "./Data/SyntheticData2Shading.csv")
 	if de != nil {
 		log.Fatal(de)
 		return

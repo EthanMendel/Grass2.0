@@ -91,15 +91,11 @@ func ReadShading(plant *Plant, fileName string) error {
 }
 
 func FmtDuration(d time.Duration) string {
-	d = d.Round(time.Millisecond)
-	s := d / time.Second
-	d -= s * time.Second
-	ms := d / time.Millisecond
-	if s == 0 {
-		return fmt.Sprintf("%02d", ms)
-	} else {
-		return fmt.Sprintf("%02d:%02d", s, ms)
-	}
+	d = d.Round(time.Microsecond)
+	mils := d / time.Second
+	d -= mils * time.Millisecond
+	mics := d / time.Microsecond
+	return fmt.Sprintf("%02d.%02d", mils, mics)
 }
 
 func CreateCSV(fileName string, data [][]string) error {
