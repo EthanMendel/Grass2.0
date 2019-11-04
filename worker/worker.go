@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"strconv"
 	"sync"
 
 	"github.com/EthanMendel/Grass2.0/utils"
@@ -46,4 +47,28 @@ func CalculateDifPer(plant *utils.Plant, start int, end int, wg *sync.WaitGroup)
 			//fmt.Printf("Difference as a Percent of Panel %s is %d\n", panel.Name, panel.DifPer[row])
 		}
 	}
+}
+
+func SetupResults(plant *utils.Plant, outFileName string) error {
+	results := [][]string{}
+	//worker.CalculateNSaverage(plant, 0, len(plant.Dates))
+	headers := []string{"Dates"}
+	for _, panel := range plant.Panels {
+		if panel.Shading == "Bad" {
+			headers = append(headers, panel.Name)
+		}
+	}
+	results = append(results, headers)
+	for row := 0; row < len(plant.Dates); row++ {
+		data := []string{}
+		data = append(data, plant.Dates[row].Format(utils.DateLayout))
+		for _, panel := range plant.Panels {
+			if panel.Shading == "Bad" {
+				data = append(data, strconv.FormatFloat(panel.DifPer[row], 'f', 6, 64))
+			}
+		}
+		results = append(results, data)
+	}
+	err := utils.CreateCSV(outFileName, results)
+	return err
 }

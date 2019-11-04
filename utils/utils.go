@@ -12,17 +12,6 @@ import (
 
 const DateLayout = "1/2/06"
 
-func ReadCSV(fileName string) ([][]string, error) {
-	csvFile, _ := os.Open(fileName)
-	reader := csv.NewReader(bufio.NewReader(csvFile))
-	records, err := reader.ReadAll()
-	if err != nil {
-		log.Fatal(err)
-		return nil, err
-	}
-	return records, nil
-}
-
 type Panel struct {
 	Name    string
 	Shading string
@@ -34,6 +23,17 @@ type Plant struct {
 	Dates    []time.Time
 	Averages []float64
 	Panels   map[string]*Panel
+}
+
+func ReadCSV(fileName string) ([][]string, error) {
+	csvFile, _ := os.Open(fileName)
+	reader := csv.NewReader(bufio.NewReader(csvFile))
+	records, err := reader.ReadAll()
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+	return records, nil
 }
 
 func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
@@ -61,6 +61,7 @@ func ReadPlant(dataFileName string, shadingFilename string) (*Plant, error) {
 			Data:    []float64{},
 			DifPer:  []float64{},
 		}
+		panel.DifPer = make([]float64, len(plant.Dates), len(plant.Dates))
 		for row := 1; row < len(records); row++ {
 			f, fe := strconv.ParseFloat(records[row][col], 64)
 			if fe != nil {
@@ -85,11 +86,6 @@ func ReadShading(plant *Plant, fileName string) error {
 	}
 	for col := 1; col < len(records[0]); col++ {
 		plant.Panels[records[0][col]].Shading = records[1][col]
-		if records[1][col] == "Bad" {
-			plant.Panels[records[0][col]].DifPer = make([]float64, len(plant.Dates), len(plant.Dates))
-		} else {
-			plant.Panels[records[0][col]].DifPer = []float64{}
-		}
 	}
 	return nil
 }
