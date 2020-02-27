@@ -1,5 +1,4 @@
 # Grass2.0
 
-* bullet 1
-
-## Section 2
+* Overall Goal
+To process big data faster by utilizing parallel computing
